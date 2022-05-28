@@ -1,12 +1,12 @@
 {
 
   "manifest_version": 2,
-  "name": "Cookie BG Picker",
+  "name": "Java Script Checker",
   "version": "1.0",
 
-  "description": "Allows the user to customize the background color and pattern of their sites. Also saves their preferences via cookies where possible.",
+  "description": "Allows the user to check the java script files used in the website and compare them with the previous versions.",
   "icons": {
-    "48": "icons/bgpicker-48.png"
+    "48": "icons/jschecker-48.png"
   },
 
   "permissions": [
@@ -17,9 +17,9 @@
 
   "browser_action": {
     "default_icon": {
-     "32" : "icons/bgpicker-32.png"
+     "32" : "icons/jschecker-32.png"
     },
-    "default_title": "BG Picker",
+    "default_title": "JS Checker",
     "default_popup": "popup/bgpicker.html"
   },
   

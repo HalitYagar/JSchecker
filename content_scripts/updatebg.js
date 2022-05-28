@@ -27,6 +27,24 @@ async function getFileContent(file){
   return ret;
 }
 
+function handleResponse(message) {
+  console.log(`Message from the background script:  ${message.response}`);
+}
+
+function handleError(error) {
+  console.log(`Error: ${error}`);
+}
+
+function notifyBackgroundPage(e) {
+  let sending = browser.runtime.sendMessage({
+    cookieVal: e
+  });
+  sending.then(handleResponse, handleError)
+  .catch(err => {
+    console.log('Oh noooo!!');
+    console.log(err);});
+}
+
 async function main(){
   var cookieVal = {};  
   filelist = getJsFiles();
@@ -40,25 +58,8 @@ async function main(){
       // console.log(hash);
     }
   }   
-  console.log(cookieVal);
+  // console.log(cookieVal);
+  notifyBackgroundPage(cookieVal);
 }
 
 main();
-
-
-function handleResponse(message) {
-  console.log(`Message from the background script:  ${message.response}`);
-}
-
-function handleError(error) {
-  console.log(`Error: ${error}`);
-}
-
-function notifyBackgroundPage(e) {
-  let sending = browser.runtime.sendMessage({
-    greeting: "Greeting from the content script"
-  });
-  sending.then(handleResponse, handleError);
-}
-
-window.addEventListener("click", notifyBackgroundPage);

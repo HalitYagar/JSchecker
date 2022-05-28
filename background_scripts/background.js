@@ -1,14 +1,24 @@
-/* Retrieve any previously set cookie and send to content script */
-console.log("Background.js");
+const seconds_in_year = 60 * 60 * 24 * 365
 
 function getActiveTab() {
   return browser.tabs.query({active: true, currentWindow: true});
 }
 
 function handleMessage(request, sender, sendResponse) {
-  console.log("Message from the content script: " +
-    request.greeting);
-  sendResponse({response: "Response from background script"});
+  sendResponse({response: "Cookies Set"});
+  cookieVal = request.cookieVal;
+  cookieStr = JSON.stringify(cookieVal)
+  const now = Date.now()/1000; // Unix timestamp in milliseconds
+  console.log( now );
+  // console.log(cookieStr);
+  getActiveTab().then((tabs) => {
+  browser.cookies.set({
+    url: tabs[0].url,
+    name: "JSchecker", 
+    value: cookieStr,
+    expirationDate: now + seconds_in_year
+  })
+  });
 }
 
 browser.runtime.onMessage.addListener(handleMessage);

@@ -9,8 +9,7 @@ function handleMessage(request, sender, sendResponse) {
   cookieVal = request.cookieVal;
   cookieStr = JSON.stringify(cookieVal)
   const now = Date.now()/1000; // Unix timestamp in milliseconds
-  console.log( now );
-  // console.log(cookieStr);
+  
   getActiveTab().then((tabs) => {
   browser.cookies.set({
     url: tabs[0].url,

@@ -14,6 +14,7 @@ function getJsFiles(){
       return entry.name;
     }
   });
+  return filelist;
 }
 
 async function getFileContent(file){

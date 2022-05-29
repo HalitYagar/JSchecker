@@ -11,10 +11,9 @@ function getJsFiles(){
   var entries = performance.getEntriesByType('resource');
   var filelist = entries.map(function(entry) {
     if (entry.initiatorType === 'script') {
-      return entry.name;      
-    } 
+      return entry.name;
+    }
   });
-  return filelist;
 }
 
 async function getFileContent(file){
@@ -35,9 +34,10 @@ function handleError(error) {
   console.log(`Error: ${error}`);
 }
 
-function notifyBackgroundPage(e) {
+function notifyBackgroundPage(type,val) {
   let sending = browser.runtime.sendMessage({
-    cookieVal: e
+    type: type,
+    cookieVal: val
   });
   sending.then(handleResponse, handleError)
   .catch(err => {
@@ -46,7 +46,7 @@ function notifyBackgroundPage(e) {
 }
 
 async function main(){
-  var cookieVal = {};  
+  var cookieVal = {};
   filelist = getJsFiles();
   for(file of filelist){
     if(file != undefined){
@@ -60,7 +60,8 @@ async function main(){
     }
   }
   console.log(Object.keys(cookieVal).length);
-  notifyBackgroundPage(cookieVal);
+  notifyBackgroundPage("set",cookieVal);
+  notifyBackgroundPage("get");
 }
 
 main();

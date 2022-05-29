@@ -51,14 +51,15 @@ async function main(){
   for(file of filelist){
     if(file != undefined){
       var data = await getFileContent(file);
+      var filehash = await createHash(file);
       var hash = await createHash(data);
-      cookieVal[file] = hash;
-      // console.log(file);
+      cookieVal[filehash] = hash;
+      // console.log(filehash);
       // console.log(data);
       // console.log(hash);
     }
-  }   
-  // console.log(cookieVal);
+  }
+  console.log(Object.keys(cookieVal).length);
   notifyBackgroundPage(cookieVal);
 }
 

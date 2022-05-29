@@ -6,4 +6,4 @@ This extension is compatiable with mozilla firefox and google chrome.
 
 ## Usage
 
-Install the extension to your favorite browser, then 
+Install the extension to your favorite browser, then use the check button to compare website to the last time opened.

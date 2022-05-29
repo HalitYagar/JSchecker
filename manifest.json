@@ -20,7 +20,7 @@
      "32" : "icons/jschecker-32.png"
     },
     "default_title": "JS Checker",
-    "default_popup": "popup/bgpicker.html"
+    "default_popup": "popup/jschecker.html"
   },
   
   "background": {

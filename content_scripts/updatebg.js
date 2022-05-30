@@ -62,7 +62,8 @@ async function main(){
   }
   console.log(Object.keys(cookieVal).length);
   notifyBackgroundPage("set",cookieVal);
-  notifyBackgroundPage("get");
 }
 
-main();
+// main();
+
+browser.runtime.onMessage.addListener(main);

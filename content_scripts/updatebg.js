@@ -14,7 +14,10 @@ function getJsFiles(){
       return entry.name;
     }
   });
-  return filelist;
+  const ret = filelist.filter(file => {
+    return file !== undefined;
+  });
+  return ret;
 }
 
 async function getFileContent(file){
@@ -42,13 +45,12 @@ function notifyBackgroundPage(type,val) {
   });
   sending.then(handleResponse, handleError)
   .catch(err => {
-    console.log('Oh noooo!!');
     console.log(err);});
 }
 
-async function main(){
+async function main(filelist){
+
   var cookieVal = {};
-  filelist = getJsFiles();
   for(file of filelist){
     if(file != undefined){
       var data = await getFileContent(file);
@@ -60,10 +62,16 @@ async function main(){
       // console.log(hash);
     }
   }
-  console.log(Object.keys(cookieVal).length);
+
   notifyBackgroundPage("set",cookieVal);
 }
 
-// main();
 
-browser.runtime.onMessage.addListener(main);
+function eventListener(request, sender, sendResponse){
+
+  filelist = getJsFiles();
+  // console.log(filelist.length);
+  sendResponse({response: filelist.length});
+  main(filelist);
+}
+browser.runtime.onMessage.addListener(eventListener);

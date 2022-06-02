@@ -72,7 +72,9 @@ getActiveTab().then((tabs) => {
     gettingCookies.then((cookie) => {
     if (cookie) { // there is cookies that saved previously
         oldCookie = JSON.parse(cookie.value);
-        // console.log(existingCookie);
+        console.log(cookie);
+        let time = document.querySelector("#time");
+        time.innerText = "JS files : "+oldCookie["date"];
         console.log("compare cookies ");
         compare_cokies(currCookie,oldCookie);
     } else {  // there are no currently set cookies

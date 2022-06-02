@@ -21,7 +21,20 @@
     height: 20px;
   }
 
+  .reset {
+    width: 208px;
+    height: 20px;
+  }
+
   input, .check button {
+    display: block;
+    width: 48%;
+    height: 110%;
+    float: left;
+    margin: 0 1% 1% 1%;
+  }
+
+  input, .reset button {
     display: block;
     width: 48%;
     height: 110%;

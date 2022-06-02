@@ -1,7 +1,6 @@
 var check = document.querySelector('.check button');
+var reset = document.querySelector('.reset button');
 
-// let count = document.querySelector("#count");
-// count.innerText = "hello";
 function getActiveTab() {
     return browser.tabs.query({active: true, currentWindow: true});
 }
@@ -18,10 +17,22 @@ function handleError(error) {
 
 
 check.onclick = function() {
-    console.log("clicked");
+    console.log("clicked check");
     getActiveTab().then((tabs) => {
         browser.tabs.sendMessage(tabs[0].id, {check: true})
         .then(handleResponse, handleError);
     });
+
+}
+
+reset.onclick = function() {
+    console.log("clicked reset");
+    getActiveTab().then((tabs) => {
+        browser.cookies.remove({
+            url: tabs[0].url,
+            name: "JSchecker"
+          });
+    });
+    console.log("cookie removed");
 
 }

@@ -57,9 +57,6 @@ async function main(filelist){
       var filehash = await createHash(file);
       var hash = await createHash(data);
       cookieVal[filehash] = hash;
-      // console.log(filehash);
-      // console.log(data);
-      // console.log(hash);
     }
   }
 
@@ -70,7 +67,6 @@ async function main(filelist){
 function eventListener(request, sender, sendResponse){
 
   filelist = getJsFiles();
-  // console.log(filelist.length);
   sendResponse({response: filelist.length});
   main(filelist);
 }

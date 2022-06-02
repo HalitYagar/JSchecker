@@ -10,8 +10,8 @@ function getActiveTab() {
 
 function handleResponse(message) {
     console.log(`Message from the update script:  ${message.response}`);
-    let count = document.querySelector("#count");
-    count.innerText = "JS files : "+message.response;
+    // let count = document.querySelector("#count");
+    // count.innerText = "JS files : "+message.response;
 
 }
 
@@ -72,9 +72,6 @@ getActiveTab().then((tabs) => {
     gettingCookies.then((cookie) => {
     if (cookie) { // there is cookies that saved previously
         oldCookie = JSON.parse(cookie.value);
-        console.log(cookie);
-        let time = document.querySelector("#time");
-        time.innerText = "JS files : "+oldCookie["date"];
         console.log("compare cookies ");
         compare_cokies(currCookie,oldCookie);
     } else {  // there are no currently set cookies
@@ -92,3 +89,22 @@ getActiveTab().then((tabs) => {
 }
 
 browser.runtime.onMessage.addListener(handleMessage);
+
+getActiveTab().then((tabs) => {
+    var oldCookie;
+    var gettingCookies = browser.cookies.get({
+    url: tabs[0].url,
+    name: "JSchecker"
+    });
+    gettingCookies.then((cookie) => {
+        if (cookie) { // there is cookies that saved previously
+            oldCookie = JSON.parse(cookie.value);
+            console.log(cookie);
+            var numFiles = Object.keys(oldCookie).length-1;
+            let time = document.querySelector("#time");
+            time.innerText = "Last access : "+oldCookie["date"];
+            let count = document.querySelector("#count");
+            count.innerText = "JS files : " + numFiles;
+        }
+    });
+});

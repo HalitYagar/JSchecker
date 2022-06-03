@@ -43,16 +43,48 @@ reset.onclick = function() {
 }
 
 function compare_cokies(curr,old){
-    currStr = JSON.stringify(curr);
-    oldStr = JSON.stringify(old);
-
-    if(currStr === oldStr){
-        console.log("cookies are same");
-        text.innerHTML = "&#9989; JS files are the same";
+    oldCount  = Object.keys(old).length;
+    currCount = Object.keys(curr).length;
+    console.log(oldCount,currCount);
+    var diff = oldCount - currCount;
+    if(diff > 0){
+        if(diff == 1){
+            text.innerHTML = "&#10060; "+diff+" JS file are removed";
+        } else {
+            text.innerHTML = "&#10060; "+diff+" JS files are removed";
+        }
+    } else if(diff < 0){
+        diff *= -1;
+        if(diff == 1){
+            text.innerHTML = "&#10060; "+diff+" New JS files added";
+        } else {
+            text.innerHTML = "&#10060; "+diff+" New JS files added";
+        }
     } else {
-        console.log("cookies are different");
-        text.innerHTML = "&#10060; JS files are changed";
+        var count = 0;
+
+        for(const oldFile in old){
+            console.log(`${oldFile}: ${old[oldFile]}`);
+            console.log(curr[oldFile]);
+            if(oldFile == "date"){continue;}
+            if(curr[oldFile] == undefined){
+                count++;
+            } else if(curr[oldFile] != old[oldFile]){
+                count++;
+            }
+        }
+        if(count != 0){
+            if(count == 1){
+                text.innerHTML = "&#10060; "+ count +" JS file are changed ";
+            } else {
+                text.innerHTML = "&#10060; "+ count +" JS file are changed ";
+            }
+        } else {
+            text.innerHTML = "&#9989; JS files are the same";
+        }
+
     }
+
 }
 
 function handleMessage(request, sender, sendResponse) {
@@ -99,7 +131,7 @@ getActiveTab().then((tabs) => {
     gettingCookies.then((cookie) => {
         if (cookie) { // there is cookies that saved previously
             oldCookie = JSON.parse(cookie.value);
-            console.log(cookie);
+            // console.log(cookie);
             var numFiles = Object.keys(oldCookie).length-1;
             let time = document.querySelector("#time");
             time.innerText = "Last access : "+oldCookie["date"];
